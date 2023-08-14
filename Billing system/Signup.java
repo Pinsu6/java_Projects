@@ -10,7 +10,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 public class Signup extends JFrame implements ActionListener {
-    JButton Back,create;
+    JButton Back, create;
+    Choice accountType;
+    JTextField meter, username, Tname, Tpassword;
+
     Signup() {
         setBounds(450, 150, 700, 400);
         getContentPane().setBackground(Color.white);
@@ -30,7 +33,7 @@ public class Signup extends JFrame implements ActionListener {
         heading.setForeground(Color.gray);
         heading.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-        Choice accountType = new Choice();
+        accountType = new Choice();
         accountType.add("Admin");
         accountType.add("Customer");
         accountType.setBounds(260, 50, 150, 20);
@@ -43,8 +46,8 @@ public class Signup extends JFrame implements ActionListener {
         lblmeter.setFont(new Font("Tahoma", Font.BOLD, 14));
         panel.add(lblmeter);
 
-        JTextField meter = new JTextField();
-        meter.setBounds(260,90,150,20);
+        meter = new JTextField();
+        meter.setBounds(260, 90, 150, 20);
         panel.addPropertyChangeListener(null);
         panel.add(meter);
 
@@ -54,8 +57,8 @@ public class Signup extends JFrame implements ActionListener {
         user.setFont(new Font("Tahoma", Font.BOLD, 14));
         panel.add(user);
 
-        JTextField username = new JTextField();
-        username.setBounds(260,130,150,20);
+        username = new JTextField();
+        username.setBounds(260, 130, 150, 20);
         panel.addPropertyChangeListener(null);
         panel.add(username);
 
@@ -65,30 +68,29 @@ public class Signup extends JFrame implements ActionListener {
         Name.setFont(new Font("Tahoma", Font.BOLD, 14));
         panel.add(Name);
 
-        
-        JTextField Tname = new JTextField();
-        Tname.setBounds(260,170,150,20);
+        Tname = new JTextField();
+        Tname.setBounds(260, 170, 150, 20);
         panel.addPropertyChangeListener(null);
         panel.add(Tname);
 
-         JLabel password = new JLabel("password");
+        JLabel password = new JLabel("password");
         password.setBounds(100, 210, 140, 20);
         password.setForeground(Color.gray);
         password.setFont(new Font("Tahoma", Font.BOLD, 14));
         panel.add(password);
 
-        JTextField Tpassword = new JTextField();
-        Tpassword.setBounds(260,210,150,20);
+        Tpassword = new JTextField();
+        Tpassword.setBounds(260, 210, 150, 20);
         panel.addPropertyChangeListener(null);
         panel.add(Tpassword);
 
-         create = new JButton("Create");
+        create = new JButton("Create");
         create.setBackground(Color.BLACK);
         create.setForeground(Color.WHITE);
         create.setBounds(140, 260, 120, 25);
         panel.add(create);
+        create.addActionListener(this);
 
-        
         Back = new JButton("Back");
         Back.setBackground(Color.BLACK);
         Back.setForeground(Color.WHITE);
@@ -97,28 +99,39 @@ public class Signup extends JFrame implements ActionListener {
         panel.add(Back);
 
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icon/signupImage.png"));
-        Image i2 = i1.getImage().getScaledInstance(250, 250,Image.SCALE_DEFAULT);
+        Image i2 = i1.getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel image = new JLabel(i3);
-        image.setBounds(415,30,250,250);
+        image.setBounds(415, 30, 250, 250);
         panel.add(image);
         setVisible(true);
     }
 
-    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == Back) {
 
             setVisible(false);
             new Login();
+        } else if (e.getSource() == create) {
+            String atype = accountType.getSelectedItem();
+            String suser = username.getText();
+            String sname = Tname.getText();
+            String spassword = Tpassword.getText();
+            String smeter = meter.getText();
+            try {
+                conn c = new conn();
+                String q = "insert into login values('" + smeter + "','" + suser + "','" + spassword + "','" + atype
+                        + "','" + sname + "')";
+                c.s.executeUpdate(q);
+                JOptionPane.showMessageDialog(null, "Account Created Sucessfully");
+                setVisible(false);
+                new Login();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         }
-        else if(e.getSource() == create)
-        {
-            
-        }
-         
-        
+
     }
 
     public static void main(String[] args) {

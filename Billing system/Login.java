@@ -76,10 +76,10 @@ public class Login extends JFrame implements ActionListener {
             setVisible(false);
             new Signup();
         }
-         
+
         else if (e.getSource() == cancel) {
-          username.setText("");
-           tpassword.setText("");
+            username.setText("");
+            tpassword.setText("");
         }
     }
 
