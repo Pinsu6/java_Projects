@@ -1,4 +1,8 @@
+import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.*;
+
+import com.mysql.cj.protocol.Resultset;
+import java.sql.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +10,7 @@ import java.awt.event.ActionListener;
 public class Login extends JFrame implements ActionListener {
     JButton login, cancel, signup;
     JTextField username, tpassword;
+    Choice logginin;
 
     Login() {
         super("Login Page");
@@ -17,7 +22,7 @@ public class Login extends JFrame implements ActionListener {
 
         username = new JTextField();
         tpassword = new JTextField();
-        Choice logginin = new Choice();
+        logginin = new Choice();
         logginin.add("Admin");
         logginin.add("customer");
         add(user);
@@ -80,6 +85,28 @@ public class Login extends JFrame implements ActionListener {
         else if (e.getSource() == cancel) {
             username.setText("");
             tpassword.setText("");
+        } else if (e.getSource() == login) {
+            String susername = username.getText();
+            String spassword = tpassword.getText();
+            String user = logginin.getSelectedItem();
+            try {
+                conn c = new conn();
+                String q = "select * from login where username='" + susername + "' and password='" + spassword
+                        + "' and user='" + user + "'";
+
+                ResultSet rs = c.s.executeQuery(q);
+                if (rs.next()) {
+                    setVisible(false);
+                    new project();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect information");
+                    username.setText("");
+                    tpassword.setText("");
+                }
+
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
     }
 
