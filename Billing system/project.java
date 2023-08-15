@@ -14,6 +14,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+
+//gui
 public class project extends JFrame {
     project() {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -71,8 +73,7 @@ public class project extends JFrame {
         master.add(calculatebill);
 
         JMenu information = new JMenu("Information");
-        information.setForeground(Color.RED);
-
+        information.setForeground(Color.RED);  
         JMenuItem updateinformation = new JMenuItem("Update Information");
         updateinformation.setFont(new Font("monospaced", Font.PLAIN, 12));
         updateinformation.setBackground(Color.WHITE);
